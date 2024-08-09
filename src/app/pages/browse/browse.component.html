@@ -1,0 +1,27 @@
+<div *ngFor="let store of stores" class="my-12 px-6 sm:px-12 lg:px-24 scroll-smooth">
+  <!-- Store Name with Scrolling Storytelling -->
+  <h2 class="text-3xl font-extrabold text-gray-900 mb-8 tracking-tight">
+    {{ store.name }}
+  </h2>
+
+  <!-- Store Items Grid -->
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+    <!-- Item Card -->
+    <div *ngFor="let item of store.items" class="relative group">
+      <!-- Card Background with Glassmorphism Effect -->
+      <div class="absolute inset-0 bg-white/60 backdrop-blur-lg rounded-lg shadow-lg transition duration-300 group-hover:shadow-2xl">
+      </div>
+      <div class="relative p-6">
+        <!-- Item Name -->
+        <h3 class="text-xl font-semibold text-gray-800 mb-2">{{ item.name }}</h3>
+
+        <!-- Item Description -->
+        <p class="text-sm text-gray-600 mb-4">{{ item.description }}</p>
+
+        <p class="text-xl font-bold text-indigo-600 transition group-hover:text-indigo-800">
+          £{{ item.price }}
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
