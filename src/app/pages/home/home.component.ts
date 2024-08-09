@@ -1,11 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
+import { ItemService } from '../../services/item.service';
+import {Item} from "../../models/Item.model";
 
 @Component({
   selector: 'app-home',
-  standalone: true,
-  imports: [],
   templateUrl: './home.component.html',
-  styleUrl: './home.component.scss'
+  standalone: true
 })
 export class HomeComponent {
 

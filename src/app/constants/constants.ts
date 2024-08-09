@@ -13,6 +13,13 @@ export const ApiEndpoints = {
     CreateUser: '/api/users',
     UpdateUser: '/api/users',
     DeleteUser: '/api/users'
+  },
+  Stores: {
+    GetAll: '/api/stores',
+    GetById: '/api/stores',
+    Create: '/api/stores',
+    Update: '/api/stores',
+    Delete: '/api/stores',
   }
 };
 

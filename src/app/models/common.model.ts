@@ -1,3 +1,6 @@
+import {Item} from "./Item.model";
+import {Store} from "./Store.model";
+
 export interface User {
   email: string;
   firstName: string;
@@ -18,6 +21,10 @@ export interface ApiResponse {
     isAuthenticated: boolean;
     user?: User;
     users?: User[];
+    item?: Item;
+    items?: Item[];
+    store?: Store;
+    stores?: Store[];
   }
   error?: string;
 }
