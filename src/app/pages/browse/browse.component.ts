@@ -1,9 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {Item} from "../../models/Item.model";
 import {Store} from "../../models/Store.model";
 import {ItemService} from "../../services/item.service";
 import {StoreService} from "../../services/store.service";
-import {of} from "rxjs";
 import {NgForOf} from "@angular/common";
 
 @Component({
