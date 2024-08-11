@@ -141,6 +141,7 @@ export class ManageItemsComponent implements OnInit {
     this.itemService.deleteItem(this.selectedItem?._id).subscribe({
       next: () => {
         this.items = this.items.filter(item => item._id !== this.selectedItem?._id);
+        this.showDeleteModal = false;
         this.cdr.detectChanges(); // Manually trigger change detection after deleting item
       },
       error: (err: any) => {
