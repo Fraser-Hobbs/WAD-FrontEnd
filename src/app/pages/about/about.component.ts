@@ -1,12 +1,25 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { StoreService } from '../../services/store.service'
+import {NgForOf} from "@angular/common";
 
 @Component({
   selector: 'app-about',
-  standalone: true,
-  imports: [],
   templateUrl: './about.component.html',
-  styleUrl: './about.component.scss'
+  standalone: true,
+  imports: [
+    NgForOf
+  ],
+  styleUrls: ['./about.component.scss']
 })
-export class AboutComponent {
+export class AboutComponent implements OnInit {
 
+  stores: any[] = [];
+
+  constructor(private storeService: StoreService) { }
+
+  ngOnInit(): void {
+    this.storeService.getStores().subscribe((response) => {
+      this.stores = response.data?.stores ?? [];
+    });
+  }
 }

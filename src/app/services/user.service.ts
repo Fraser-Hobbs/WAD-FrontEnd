@@ -1,6 +1,6 @@
-import { inject, Injectable } from '@angular/core';
+import { inject, Injectable, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { tap, catchError, of } from 'rxjs';
+import {tap, catchError, of, Observable} from 'rxjs';
 import { ApiResponse, User } from '../models/common.model';
 import { ApiEndpoints } from '../constants/constants';
 
@@ -8,21 +8,28 @@ import { ApiEndpoints } from '../constants/constants';
   providedIn: 'root'
 })
 export class UserService {
-  constructor(private _http: HttpClient) {}
+  private _http = inject(HttpClient);
+  private currentUser: User | null = null;
 
-  getCurrentUser() {
-    return this._http.get<ApiResponse>(ApiEndpoints.Users.GetUserDetails, { withCredentials: true }).pipe(
-      tap((response) => {
-        if (response?.data?.user) {
-          console.log('Current user fetched successfully');
-        }
-      }),
-      catchError((error) => {
-        console.error('Error fetching current user', error);
-        return of(null);
-      })
-    );
+  getCurrentUser(): Observable<ApiResponse | null> {
+    if (this.currentUser) {
+      return of({ data: { user: this.currentUser } } as ApiResponse);
+    } else {
+      return this._http.get<ApiResponse>(ApiEndpoints.Users.GetUserDetails, { withCredentials: true }).pipe(
+        tap((response) => {
+          if (response?.data?.user) {
+            this.currentUser = response.data.user;
+            console.log('Current user fetched successfully');
+          }
+        }),
+        catchError((error) => {
+          console.error('Error fetching current user', error);
+          return of(null);
+        })
+      );
+    }
   }
+
 
   getAllUsers() {
     return this._http.get<ApiResponse>(ApiEndpoints.Users.GetAllUsers, { withCredentials: true }).pipe(
@@ -78,5 +85,9 @@ export class UserService {
         return of(null);
       })
     );
+  }
+
+  clearCurrentUser() {
+    this.currentUser = null;
   }
 }

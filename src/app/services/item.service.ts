@@ -15,11 +15,21 @@ export class ItemService {
   /**
    * Get all items
    */
-  getItems(): Observable<ApiResponse> {
-    return this.http.get<ApiResponse>(`${this.baseUrl}`).pipe(
+  getItems(queryParams?: { [key: string]: string | number }): Observable<ApiResponse> {
+    // Start with the base URL
+    let url = `${this.baseUrl}`;
+
+    // If query parameters are provided, append them to the URL
+    if (queryParams) {
+      const queryString = new URLSearchParams(queryParams as any).toString();
+      url = `${url}?${queryString}`;
+    }
+
+    return this.http.get<ApiResponse>(url).pipe(
       catchError(this.handleError<ApiResponse>('getItems'))
     );
   }
+
 
   /**
    * Get a single item by ID
@@ -51,7 +61,7 @@ export class ItemService {
   /**
    * Delete an item
    */
-  deleteItem(id: string): Observable<ApiResponse> {
+  deleteItem(id: string | undefined): Observable<ApiResponse> {
     return this.http.delete<ApiResponse>(`${this.baseUrl}/${id}`).pipe(
       catchError(this.handleError<ApiResponse>('deleteItem'))
     );

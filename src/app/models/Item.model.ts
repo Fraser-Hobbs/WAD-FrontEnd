@@ -1,8 +1,8 @@
 export interface Item {
-  _id: string;
+  _id?: string;
   name: string;
   description: string;
   price: number;
-  storeId: string;
-  dateCreated: Date;
+  storeId?: string;
+  dateCreated?: Date;
 }

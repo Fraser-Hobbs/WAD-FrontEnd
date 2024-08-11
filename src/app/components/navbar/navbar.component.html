@@ -50,7 +50,7 @@
            class="bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-base hover:text-gray-900">
           Login
         </a>
-        <a *ngIf="isLoggedIn" routerLink="/dashboard"
+        <a *ngIf="isLoggedIn" routerLink="/dashboard/items"
            routerLinkActive="underline underline-offset-4 decoration-2 decoration-indigo-500"
            (click)="closeMobileMenu()"
            class="content-center hover:text-gray-900">
@@ -91,7 +91,7 @@
          class="mx-2 text-gray-900 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">
         Login
       </a>
-      <a *ngIf="isLoggedIn" routerLink="/dashboard"
+      <a *ngIf="isLoggedIn" routerLink="/dashboard/items"
          routerLinkActive="underline underline-offset-4 decoration-2 decoration-indigo-500"
          (click)="closeMobileMenu()"
          class="mx-2 text-gray-900 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">

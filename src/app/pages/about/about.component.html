@@ -1,1 +1,46 @@
-<p>about works!</p>
+<div class="bg-gray-50 min-h-screen">
+  <div class="container mx-auto py-16 px-6 lg:px-12">
+    <div class="text-center mb-12">
+      <h1 class="text-5xl font-extrabold text-gray-900 mb-4">
+        About Our Charity Shop
+      </h1>
+      <p class="text-lg text-gray-700">
+        Supporting the local hospice through community-driven initiatives.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <div class="bg-white p-8 rounded-lg shadow-lg transition transform hover:scale-105">
+        <h2 class="text-2xl font-bold text-indigo-600 mb-4">Our Mission</h2>
+        <p class="text-gray-700">
+          Our charity shop aims to support the local hospice by raising funds through the sale of donated goods. Every purchase contributes to providing essential care to those in need.
+        </p>
+      </div>
+
+      <div class="bg-white p-8 rounded-lg shadow-lg transition transform hover:scale-105">
+        <h2 class="text-2xl font-bold text-indigo-600 mb-4">What We Offer</h2>
+        <p class="text-gray-700">
+          Our stores are filled with unique items, including clothing, books, furniture, and more. Each item has been generously donated, offering you the chance to find something special while supporting a great cause.
+        </p>
+      </div>
+
+      <div class="bg-white p-8 rounded-lg shadow-lg transition transform hover:scale-105">
+        <h2 class="text-2xl font-bold text-indigo-600 mb-4">Our Impact</h2>
+        <p class="text-gray-700">
+          Since our founding, we have contributed over $500,000 to the hospice, funding critical care and services. Your support helps us continue making a difference in our community.
+        </p>
+      </div>
+    </div>
+
+    <div class="mt-16">
+      <h2 class="text-4xl font-bold text-gray-900 text-center mb-8">Our Locations</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div *ngFor="let store of stores" class="bg-white p-6 rounded-lg shadow-md">
+          <h3 class="text-2xl font-semibold text-indigo-600 mb-2">{{ store.name }}</h3>
+          <p class="text-gray-700">{{ store.address }}</p>
+<!--          <p class="text-gray-500 text-sm">{{ store.city }}, {{ store.state }} {{ store.zip }}</p>-->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,11 @@
+<app-navbar></app-navbar>
+
+<div class="flex">
+  <!-- Sidebar -->
+  <app-dashboard-sidebar class=" h-[calc(100vh-5rem)] w-40 flex flex-col fixed top-20"></app-dashboard-sidebar>
+
+  <!-- Main content area -->
+  <div class="flex-1 ml-40 pt-20">
+    <router-outlet></router-outlet>
+  </div>
+</div>
