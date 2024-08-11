@@ -3,10 +3,10 @@ import { ItemService } from '../../../services/item.service';
 import { UserService } from '../../../services/user.service';
 import { Item } from '../../../models/Item.model';
 import { User } from '../../../models/common.model';
-import { Store } from '../../../models/Store.model';
 import { ItemModalComponent } from '../../modals/item-modal/item-modal.component';
 import { NgClass, NgForOf, NgIf } from '@angular/common';
-import {StoreService} from "../../../services/store.service";
+import { StoreService } from '../../../services/store.service';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-manage-items',
@@ -16,12 +16,14 @@ import {StoreService} from "../../../services/store.service";
     ItemModalComponent,
     NgIf,
     NgForOf,
-    NgClass
+    NgClass,
+    FormsModule
   ],
   styleUrls: ['./manage-items.component.scss']
 })
 export class ManageItemsComponent implements OnInit {
-  items: Item[] = [];
+  allItems: Item[] = [];  // Holds all items regardless of search/filter
+  items: Item[] = [];     // Holds the currently displayed items
   user: User | undefined;
   stores: { [key: string]: string } = {}; // Ensure stores is initialized as an empty object
   showModal: boolean = false;
@@ -29,7 +31,7 @@ export class ManageItemsComponent implements OnInit {
   selectedItem: Item | null = null;
   isEditing: boolean = false;
   sortDirection: string = 'asc';
-  currentSortField: string = 'name';
+  currentSortField: string = 'storeName';
   searchQuery: string = '';
 
   constructor(
@@ -65,8 +67,8 @@ export class ManageItemsComponent implements OnInit {
 
     this.itemService.getItems(queryParams).subscribe({
       next: (response) => {
-        this.items = response.data?.items || [];
-        this.sortItems(); // Sort items after loading
+        this.allItems = response.data?.items || [];
+        this.applySearchFilter(); // Apply the search filter after loading
         this.cdr.detectChanges(); // Manually trigger change detection
       },
       error: (err: any) => {
@@ -126,16 +128,21 @@ export class ManageItemsComponent implements OnInit {
   }
 
   applySearchFilter(): void {
-    this.items = this.items.filter(item => {
-      const storeName = item.storeId && this.stores[item.storeId] ? this.stores[item.storeId].toLowerCase() : '';
-      return (
-        item.name.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
-        item.description.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
-        storeName.includes(this.searchQuery.toLowerCase())
-      );
-    });
+    if (this.searchQuery.trim() === '') {
+      // If search query is empty, reset to all items
+      this.items = [...this.allItems];
+    } else {
+      this.items = this.allItems.filter(item => {
+        const storeName = item.storeId && this.stores[item.storeId] ? this.stores[item.storeId].toLowerCase() : '';
+        return (
+          item.name.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
+          item.description.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
+          storeName.includes(this.searchQuery.toLowerCase())
+        );
+      });
+    }
+    this.sortItems(); // Reapply sorting after filtering
   }
-
 
   deleteItem(): void {
     this.itemService.deleteItem(this.selectedItem?._id).subscribe({

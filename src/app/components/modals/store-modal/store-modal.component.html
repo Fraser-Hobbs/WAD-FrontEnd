@@ -1,0 +1,41 @@
+<div class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+  <div class="bg-white p-6 rounded-lg shadow-lg max-w-lg w-full">
+    <h2 class="text-xl font-semibold mb-4 text-center">{{ isEditing ? 'Edit Store' : 'Add New Store' }}</h2>
+
+    <form [formGroup]="storeForm" (ngSubmit)="onSave()">
+      <div class="mb-4">
+        <label class="block text-sm font-medium text-gray-700">Store Name <span class="text-red-500">*</span></label>
+        <input
+          formControlName="name"
+          type="text"
+          class="mt-1 block w-full p-2 border border-gray-300 rounded-md"
+        >
+        <div *ngIf="storeForm.get('name')?.invalid && storeForm.get('name')?.touched" class="text-red-500 text-sm">
+          Store Name is required.
+        </div>
+      </div>
+
+      <div class="mb-4">
+        <label class="block text-sm font-medium text-gray-700">Address <span class="text-red-500">*</span></label>
+        <input
+          formControlName="address"
+          type="text"
+          class="mt-1 block w-full p-2 border border-gray-300 rounded-md"
+        >
+        <div *ngIf="storeForm.get('address')?.invalid && storeForm.get('address')?.touched" class="text-red-500 text-sm">
+          Address is required.
+        </div>
+      </div>
+
+      <div class="flex justify-center space-x-2">
+        <button type="button" (click)="onCancel()" class="px-4 py-2 bg-gray-300 text-gray-700 rounded-md hover:bg-gray-400">Cancel</button>
+        <button
+          type="submit"
+          class="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
+        >
+          {{ isEditing ? 'Save' : 'Create' }}
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

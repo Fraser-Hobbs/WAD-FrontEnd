@@ -1,0 +1,89 @@
+<div class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+  <div class="bg-white p-6 rounded-lg shadow-lg max-w-lg w-full">
+    <h2 class="text-xl font-semibold mb-4 text-center">{{ isEditing ? 'Edit User' : 'Add New User' }}</h2>
+
+    <form [formGroup]="userForm" (ngSubmit)="onSave()">
+      <!-- First Name -->
+      <div class="mb-4">
+        <label class="block text-sm font-medium text-gray-700">First Name <span class="text-red-500">*</span></label>
+        <input
+          formControlName="firstName"
+          type="text"
+          class="mt-1 block w-full p-2 border border-gray-300 rounded-md"
+        >
+        <div *ngIf="userForm.get('firstName')?.invalid && userForm.get('firstName')?.touched" class="text-red-500 text-sm">
+          First Name is required.
+        </div>
+      </div>
+
+      <!-- Last Name -->
+      <div class="mb-4">
+        <label class="block text-sm font-medium text-gray-700">Last Name</label>
+        <input
+          formControlName="lastName"
+          type="text"
+          class="mt-1 block w-full p-2 border border-gray-300 rounded-md"
+        >
+      </div>
+
+      <!-- Email -->
+      <div class="mb-4">
+        <label class="block text-sm font-medium text-gray-700">Email <span class="text-red-500">*</span></label>
+        <input
+          formControlName="email"
+          type="email"
+          class="mt-1 block w-full p-2 border border-gray-300 rounded-md"
+        >
+        <div *ngIf="userForm.get('email')?.invalid && userForm.get('email')?.touched" class="text-red-500 text-sm">
+          Valid Email is required.
+        </div>
+      </div>
+
+      <!-- Role -->
+      <div class="mb-4">
+        <label class="block text-sm font-medium text-gray-700">Role <span class="text-red-500">*</span></label>
+        <select formControlName="role" class="form-select mt-1 block w-full p-2 border border-gray-300 rounded-md">
+          <option value="volunteer">Volunteer</option>
+          <option value="manager" *ngIf="isAdmin || user.role !== 'admin'">Manager</option>
+          <option value="admin" *ngIf="isAdmin">Admin</option>
+        </select>
+        <div *ngIf="userForm.get('role')?.invalid && userForm.get('role')?.touched" class="text-red-500 text-sm">
+          Role is required.
+        </div>
+      </div>
+
+      <!-- Store ID (Only visible for admins) -->
+      <div class="mb-4" *ngIf="isAdmin">
+        <label class="block text-sm font-medium text-gray-700">Store</label>
+        <select formControlName="storeId" class="form-select mt-1 block w-full p-2 border border-gray-300 rounded-md">
+          <option *ngFor="let store of stores" [value]="store._id">{{ store.name }}</option>
+        </select>
+      </div>
+
+      <!-- Password -->
+      <div class="mb-4">
+        <label class="block text-sm font-medium text-gray-700">Password <span *ngIf="!isEditing" class="text-red-500">*</span></label>
+        <input
+          formControlName="password"
+          type="password"
+          class="mt-1 block w-full p-2 border border-gray-300 rounded-md"
+          placeholder="{{ isEditing ? 'Leave empty to keep current password' : '' }}"
+        >
+        <div *ngIf="userForm.get('password')?.invalid && userForm.get('password')?.touched" class="text-red-500 text-sm">
+          Password is required.
+        </div>
+      </div>
+
+      <!-- Buttons -->
+      <div class="flex justify-center space-x-2">
+        <button type="button" (click)="onCancel()" class="px-4 py-2 bg-gray-300 text-gray-700 rounded-md hover:bg-gray-400">Cancel</button>
+        <button
+          type="submit"
+          class="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
+        >
+          {{ isEditing ? 'Save' : 'Create' }}
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

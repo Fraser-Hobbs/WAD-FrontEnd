@@ -2,6 +2,7 @@ import {Item} from "./Item.model";
 import {Store} from "./Store.model";
 
 export interface User {
+  _id?: string;
   email: string;
   firstName: string;
   lastName: string;

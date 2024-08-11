@@ -8,7 +8,28 @@
     </button>
   </div>
 
-  <div class="overflow-x-auto">
+  <div class="relative mb-4">
+    <input
+      type="text"
+      placeholder="Search items..."
+      [(ngModel)]="searchQuery"
+      (input)="applySearchFilter()"
+      class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+    />
+    <svg
+      class="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400"
+      data-slot="icon"
+      aria-hidden="true"
+      fill="none"
+      stroke-width="1.5"
+      stroke="currentColor"
+      viewBox="0 0 24 24"
+      xmlns="http://www.w3.org/2000/svg">
+      <path d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" stroke-linecap="round" stroke-linejoin="round"></path>
+    </svg>
+  </div>
+
+  <div class="overflow-x-auto hidden md:block">
     <table class="min-w-full bg-white border border-gray-200 rounded-lg">
       <thead>
       <tr class="bg-gray-50">
@@ -104,6 +125,20 @@
       </tr>
       </tbody>
     </table>
+  </div>
+
+  <!-- Mobile Responsive View -->
+  <div class="md:hidden">
+    <div *ngFor="let item of items" class="mb-4 bg-white p-4 rounded-lg shadow-sm">
+      <div class="text-lg font-semibold">{{ item.name }}</div>
+      <div class="text-gray-600 mt-1">{{ item.description }}</div>
+      <div class="mt-2 font-semibold text-gray-800">Price: <span class="text-gray-500">{{ item.price }}</span></div>
+      <div class="mt-1 font-semibold text-gray-800" *ngIf="user?.role === 'admin'">Store: <span class="text-gray-500">{{ stores?.[item.storeId ?? ''] || 'N/A' }}</span></div>
+      <div class="mt-4 flex justify-end space-x-4">
+        <button class="text-blue-600 hover:text-blue-900" (click)="openEditItemModal(item)">Edit</button>
+        <button class="text-red-600 hover:text-red-900" (click)="confirmDeleteItem(item._id)">Delete</button>
+      </div>
+    </div>
   </div>
 
   <!-- Modal -->
