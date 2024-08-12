@@ -1,11 +1,9 @@
-const apiUrl = 'http://localhost:4200/api';
-
 export const ApiEndpoints = {
   Auth: {
-    Login: `${apiUrl}/auth/login`,
-    Logout: `${apiUrl}/auth/logout`,
-    RefreshToken: `${apiUrl}/auth/refresh-token`,
-    CheckAuth: `${apiUrl}/auth/check-auth`
+    Login: `/api/auth/login`,
+    Logout: `/api/auth/logout`,
+    RefreshToken: `/api/auth/refresh-token`,
+    CheckAuth: `/api/auth/check-auth`
   },
   Users: {
     GetUserDetails: '/api/users',
@@ -22,9 +20,3 @@ export const ApiEndpoints = {
     Delete: '/api/stores',
   }
 };
-
-
-export const LocalStorage = {
-  token: 'access-token',
-  isLoggedIn: "isLoggedIn"
-}
